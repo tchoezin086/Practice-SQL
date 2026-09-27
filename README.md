@@ -1,2 +1,2 @@
-# Practice-SQL
+# Practice-SQL joins
 how to connect multiple table
