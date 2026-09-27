@@ -1,0 +1,145 @@
+JOINS(26/9/26)
+create database Restaurant;
+drop database Restaurant;
+CREATE DATABASE FoodDB;
+USE FoodDB;
+CREATE TABLE Items (
+    Item_ID INT PRIMARY KEY,
+    Item_Name VARCHAR(50),
+    Category VARCHAR(30),
+    Price DECIMAL(10,2)
+);
+CREATE TABLE Food_Orders (
+    Order_ID INT PRIMARY KEY,
+    Item_ID INT,
+    Customer_Name VARCHAR(50),
+    Quantity INT,
+    Order_Date DATE,
+    FOREIGN KEY (Item_ID) REFERENCES Items(Item_ID)
+);
+INSERT INTO Items VALUES
+(101, 'Pizza', 'Fast Food', 250.00),
+(102, 'Burger', 'Fast Food', 150.00),
+(103, 'Pasta', 'Italian', 200.00),
+(104, 'Sandwich', 'Snacks', 120.00),
+(105, 'Biryani', 'Indian', 220.00),
+(106, 'Momos', 'Snacks', 100.00),
+(107, 'Fried Rice', 'Chinese', 180.00),
+(108, 'Noodles', 'Chinese', 160.00);
+INSERT INTO Food_Orders VALUES
+(1, 101, 'Ajay', 2, '2026-09-20'),
+(2, 102, 'Asha', 1, '2026-09-20'),
+(3, 105, 'Ravi', 2, '2026-09-21'),
+(4, 103, 'Neha', 1, '2026-09-21'),
+(5, 106, 'Karan', 3, '2026-09-22'),
+(6, 101, 'Pooja', 1, '2026-09-22'),
+(7, 108, 'Amit', 2, '2026-09-23'),
+(8, 104, 'Simran', 2, '2026-09-23'),
+(9, 107, 'Rahul', 1, '2026-09-24'),
+(10, 102, 'Anjali', 2, '2026-09-24');
+select * from Food_Orders;
+select Item_Name,Category, Price from Items;
+select Order_ID, Customer_Name, Item_Name,Price,Quantity from Items inner join Food_Orders on Items.Item_ID=Food_Orders.Item_ID;
+select Customer_Name from Items inner join Food_Orders on Items.Item_ID=Food_Orders.Item_ID and Item_Name="Pizza";
+
+select Customer_Name from Items inner join Food_Orders on Items.Item_ID=Food_Orders.Item_ID and Price>=150;
+
+select Order_ID,Customer_Name from Items inner join Food_Orders on Items.Item_ID=Food_Orders.Item_ID and Quantity>=1;
+select Customer_Name,Item_Name,Price from Items inner join Food_Orders on Items.Item_ID=Food_Orders.Item_ID and Category="Fast Food";
+select Customer_Name from Items inner join Food_Orders on Items.Item_ID=Food_Orders.Item_ID and Item_Name="Biryani" and Quantity>=2;
+select Order_ID from Items inner join Food_Orders on Items.Item_ID=Food_Orders.Item_ID and Price between 100 and 200;
+select Customer_Name from Items inner join Food_Orders on Items.Item_ID=Food_Orders.Item_ID where Customer_Name like "a%";
+select Customer_Name,Item_Name,Quantity from Items inner join Food_Orders on Items.Item_ID=Food_Orders.Item_ID where Order_Date>"2026-09-21";
+USE FoodDB;
+select Order_ID from Items inner join Food_Orders on Items.Item_ID=Food_Orders.Item_ID and Category="Chinese" and Quantity>=1;
+select Order_ID, Customer_Name, Item_Name,Price from Items inner join Food_Orders on Items.Item_ID=Food_Orders.Item_ID and Price<200;
+
+CONSTRIANTS, GROUP BY AND HAVING;
+CREATE DATABASE Library;
+use Library;
+Create table Books(
+Book_ID INT PRIMARY KEY,
+Book_Name VARCHAR(100) NOT NULL UNIQUE,
+Author VARCHAR(100) NOT NULL,
+Price DECIMAL(8,2) CHECK (Price > 0),
+Category VARCHAR(50) DEFAULT 'General',
+ISBN VARCHAR(20) UNIQUE,
+Quantity INT DEFAULT 1);
+CREATE TABLE Bank(
+Account_ID INT primary key,
+Customer_Name VARCHAR(100) NOT NULL,
+Account_Type  VARCHAR(30) NOT NULL,
+Balance DECIMAL(10,2) CHECK (Balance>=0),
+Phone  VARCHAR(15) unique,
+Email VARCHAR(100) unique,
+Branch VARCHAR(50) default 'Delhi',
+Status VARCHAR(20) default 'Active');
+use company;
+
+CREATE TABLE Users (
+
+    Eid INT PRIMARY KEY,
+
+    Name VARCHAR(50),
+
+    Dept VARCHAR(30),
+
+    Salary DECIMAL(10,2),
+
+    City VARCHAR(30)
+
+);
+
+ 
+
+INSERT INTO Users (Eid, Name, Dept, Salary, City) VALUES
+
+(101, 'Ajay', 'IT', 55000, 'Delhi'),
+
+(102, 'Asha', 'HR', 48000, 'Mumbai'),
+
+(103, 'Rahul', 'IT', 62000, 'Delhi'),
+
+(104, 'Neha', 'Sales', 45000, 'Pune'),
+
+(105, 'Amit', 'IT', 58000, 'Mumbai'),
+
+(106, 'Priya', 'HR', 52000, 'Delhi'),
+
+(107, 'Karan', 'Finance', 65000, 'Pune'),
+
+(108, 'Sneha', 'Sales', 47000, 'Delhi'),
+
+(109, 'Rohit', 'IT', 60000, 'Pune'),
+
+(110, 'Pooja', 'HR', 50000, 'Mumbai'),
+
+(111, 'Vikas', 'Finance', 70000, 'Delhi'),
+
+(112, 'Anjali', 'Sales', 49000, 'Mumbai'),
+
+(113, 'Deepak', 'IT', 57000, 'Delhi'),
+
+(114, 'Kavita', 'HR', 53000, 'Pune'),
+
+(115, 'Sanjay', 'Finance', 68000, 'Mumbai'),
+
+(116, 'Meena', 'Sales', 46000, 'Delhi'),
+
+(117, 'Arjun', 'IT', 61000, 'Pune'),
+
+(118, 'Riya', 'HR', 51000, 'Mumbai'),
+
+(119, 'Manish', 'Finance', 72000, 'Delhi'),
+
+(120, 'Nisha', 'Sales', 48000, 'Pune');
+
+select * from users;
+select dept,sum(salary) from users group by dept;
+select dept,max(salary) from users group by dept;
+select city,min(salary) from users group by city;
+select dept, count(*) from users group by dept
+
+select dept, count(*) from users group by dept
+use company;
+select dept, count(*) from users group by dept having count(*)>4;
